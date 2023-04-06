@@ -9,24 +9,11 @@ object PageSearch {
      * @return       a list of the number of times any of the terms appeared in each page in the same order as given
      */
     def count(pages: List[RankedWebPage], query: List[String]): List[Double] = {
-//        @tailrec
-//        def rec(text: String, stringIndex: Int, count: Int): Int = {
-//            if (text) {
-//
-//            }
-//
-//        }
-//        pages.map(page => {
-//            for x <- page.text.length yield if
-//        })
-//        pages(0).text.indexOf("Bible", 2)
-
         for searchString <- query yield {
-            (for webpage <- pages yield {
-                (for index <- 0 to webpage.text.length - searchString.length if webpage.text.substring(index, index + searchString.length) == searchString yield 1).length
+            (for webpage <- pages.par yield {
+                (for index <- 0 to webpage.text.length - searchString.length if webpage.text.substring(index, index + searchString.length).toLowerCase() == searchString.toLowerCase() yield 1).length
             }).sum
         }
-//        List() // TODO: implement this method and remove this stub
     }
 
     /**

@@ -1,6 +1,8 @@
 import scala.io.Source
 import scala.io.StdIn.readLine
 import scala.util.Sorting
+import scala.collection.parallel.CollectionConverters._
+
 
 @main def main(): Unit = {
         println("=============================================================")
@@ -24,7 +26,6 @@ import scala.util.Sorting
           }).toList
         } //PageRank.equal(pages).toList() // call PageRank.???? here
 
-
         // Get user input then perform search until ":quit" is entered
         var query: String = ""
         var terms: List[String] = List()
@@ -38,7 +39,9 @@ import scala.util.Sorting
         } do {
           // TODO: Measure the textual match of each page to these terms using one of the functions in PageSearch
           val searchedPages: List[SearchedWebPage] = {
-            (for rankedWebPage <- rankedPages yield SearchedWebPage(rankedWebPage, PageSearch.count(rankedPages, terms).toList)).toList
+            (for rankedWebPage <- rankedPages.par yield {
+              println("run")
+              SearchedWebPage(rankedWebPage, PageSearch.count(rankedPages, terms).sum)}).toList
           } // call PageSearch.???? here
           // normalize the ranges for weight and textmatch on these pages
           val pageArray = SearchedWebPageNormalize.normalize(searchedPages).toArray
