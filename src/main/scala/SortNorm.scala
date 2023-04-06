@@ -39,15 +39,22 @@ object NameOrdering extends Ordering[SearchedWebPage] {
 
 object ArithmeticOrdering extends Ordering[SearchedWebPage] {
     // TODO: implement an actual comparison based on Arithmetic means of weight and textmatch
-    def compare(a: SearchedWebPage, b: SearchedWebPage): Int = 0
+    def compare(a: SearchedWebPage, b: SearchedWebPage): Int = {
+        ((a.textmatch + a.weight) / 2) compare ((b.textmatch + b.weight)/2)
+    }
 }
 
 object GeometricOrdering extends Ordering[SearchedWebPage] {
     // TODO: implement an actual comparison based on Geometric means of weight and textmatch
-    def compare(a: SearchedWebPage, b: SearchedWebPage): Int = 0
+    def compare(a: SearchedWebPage, b: SearchedWebPage): Int = {
+       math.sqrt(a.weight * a.textmatch) compare math.sqrt(b.weight * b.textmatch)
+    }
+
 }
 
 object HarmonicOrdering extends Ordering[SearchedWebPage] {
     // TODO: implement an actual comparison based on Harmonic means of weight and textmatch
-    def compare(a: SearchedWebPage, b: SearchedWebPage): Int = 0
+    def compare(a: SearchedWebPage, b: SearchedWebPage): Int ={
+        (2/((1/a.textmatch)+(1/a.weight))) compare (2/((1/b.textmatch)+(1/b.weight)))
+    }
 }
