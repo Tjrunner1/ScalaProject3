@@ -47,7 +47,7 @@ import scala.collection.parallel.CollectionConverters._
           val pageArray = SearchedWebPageNormalize.normalize(searchedPages).toArray
           // sort this array based on the chosen averaging scheme i.e.
           //    (ArithmeticOrdering || GeometricOrdering || HarmonicOrdering)
-          Sorting.quickSort(pageArray)(NameOrdering) // TODO: change this from name ordering to something else!!!
+          Sorting.quickSort(pageArray)(GeometricOrdering) // TODO: change this from name ordering to something else!!!
           // Print the top ranked pages in descending order
           for p <- pageArray.reverse.slice(0, 10) do println(f"${p.name}%-15s  ${p.url}")
           // print a divider to make reading the results easier
