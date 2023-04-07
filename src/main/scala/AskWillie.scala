@@ -39,9 +39,9 @@ import scala.collection.parallel.CollectionConverters._
         } do {
           // TODO: Measure the textual match of each page to these terms using one of the functions in PageSearch
           val searchedPages: List[SearchedWebPage] = {
-            (for rankedWebPage <- rankedPages.par yield {
-              println("run")
-              SearchedWebPage(rankedWebPage, PageSearch.count(rankedPages, terms).sum)}).toList
+            val counts = PageSearch.count(rankedPages, terms) //list of number of times a query appeared for each page
+            (for index <- 0 until rankedPages.length yield {
+              SearchedWebPage(rankedPages(index), counts(index))}).toList
           } // call PageSearch.???? here
           // normalize the ranges for weight and textmatch on these pages
           val pageArray = SearchedWebPageNormalize.normalize(searchedPages).toArray
