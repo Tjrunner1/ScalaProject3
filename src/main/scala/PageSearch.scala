@@ -22,7 +22,8 @@ object PageSearch {
      * @return      a list of the term-frequency of the occurrences of those terms in each page in the same order given
      */
     def tf(pages: List[RankedWebPage], query: List[String]): List[Double] = {
-        List() // TODO: implement this method and remove this stub
+        val counts = count(pages, query)
+        (for index <- 0 until pages.length yield counts(index)/pages(index).text.length).toList
     }
 
     /**

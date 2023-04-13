@@ -19,8 +19,9 @@ import scala.collection.parallel.CollectionConverters._
 
         // TODO: Measure the importance of each page using one of the functions in PageRank
         val rankedPages: List[RankedWebPage] = {
-          val m =  PageRank.equal(pages)
-          (for x <- m yield {
+          val map =  PageRank.equal(pages)
+//          val map = PageRank.indegree(pages)
+          (for x <- map yield {
             val webPage = pages.getOrElse(x._1, WebPage("","","","",List[String]()))
             RankedWebPage(webPage, x._2 )
           }).toList
@@ -40,6 +41,7 @@ import scala.collection.parallel.CollectionConverters._
           // TODO: Measure the textual match of each page to these terms using one of the functions in PageSearch
           val searchedPages: List[SearchedWebPage] = {
             val counts = PageSearch.count(rankedPages, terms) //list of number of times a query appeared for each page
+//            val counts = PageSearch.tf(rankedPages, terms)
             (for index <- 0 until rankedPages.length yield {
               SearchedWebPage(rankedPages(index), counts(index))}).toList
           } // call PageSearch.???? here
