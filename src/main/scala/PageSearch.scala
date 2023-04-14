@@ -22,8 +22,8 @@ object PageSearch {
      * @return      a list of the term-frequency of the occurrences of those terms in each page in the same order given
      */
     def tf(pages: List[RankedWebPage], query: List[String]): List[Double] = {
-        val counts = count(pages, query)
-        (for index <- 0 until pages.length yield counts(index)/pages(index).text.length).toList
+        val counts = count(pages, query) //Use count function to find the number of times a query appeared for each page
+        (for index <- 0 until pages.length yield counts(index)/pages(index).text.length).toList //loop through all the pages and return (the total number of times a query appeared in a page) divided by (the total length of the page) //(This output will be the weight a page recieves)
     }
 
     /**
