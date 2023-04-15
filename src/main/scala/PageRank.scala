@@ -16,6 +16,7 @@ object PageRank {
      * @return A map of page.id to a weight that is a simple count of the number of pages linking to that page
      */
     def indegree(pages: Map[String, WebPage]): Map[String, Double] = {
+        println("MAP LENGTH" + pages.size)
         (for page <- pages yield { //for each page yield...
             val count = (for otherPage <- pages yield { //for every otherPage(the same list of pages) yield ...
                 (for otherPageUrl <- otherPage._2.links if otherPageUrl == page._1 yield 1).sum //Count the number of url's that are equal to page.id (from otherPage's Url List)

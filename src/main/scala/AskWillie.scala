@@ -21,6 +21,7 @@ import scala.collection.parallel.CollectionConverters._
         val rankedPages: List[RankedWebPage] = {
 //          val map =  PageRank.equal(pages)
           val map = PageRank.indegree(pages)
+          println(map)
           (for x <- map yield {
             val webPage = pages.getOrElse(x._1, WebPage("","","","",List[String]()))
             RankedWebPage(webPage, x._2 )
