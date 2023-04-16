@@ -32,9 +32,9 @@ object PageSearch {
      * @return      a list of the TF-IDF score for each page in the same order given
      */
     def tfidf(pages: List[RankedWebPage], query: List[String]): List[Double] = {
-        val tf = tf(pages, query)
+        val typeFrequency = tf(pages, query)
         val counts = count(pages, query).filter(x => x > 0)
-        (for index <- 0 until pages.length yield tf(index) * (log(pages.length/(counts.length + 1)))).toList
+        (for index <- 0 until pages.length yield typeFrequency(index) * (log(pages.length/(counts.length + 1)))).toList
 
     }
 }
