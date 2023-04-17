@@ -1,4 +1,5 @@
 import scala.*
+import scala.annotation.tailrec
 import scala.util.Random
 import scala.collection.parallel.CollectionConverters.*
 
@@ -34,11 +35,10 @@ object PageRank {
         for page <- pages yield {
             (page._1, ((pagesLandedOn.count(p => page._2 == p) + 1) / (10000 + pages.size)).toDouble)
         }
-
-
     }
 
     def getWalk(pages: Map[String, WebPage], chosenPage: WebPage): WebPage = {
+        @tailrec
         def helper(loopCount: Int, pages: Map[String, WebPage], chosenPage: WebPage): WebPage = {
             loopCount match {
                 case 0 => chosenPage
