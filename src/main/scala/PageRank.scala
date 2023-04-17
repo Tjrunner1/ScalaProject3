@@ -26,6 +26,37 @@ object PageRank {
     }
 
     def pagerank(pages: Map[String, WebPage]): Map[String, Double] = {
-        Map() // TODO: remove this stub and implement this method
+        val rand = scala.util.Random
+        val pagesLandedOn = (for x <- 0 until 10000 yield {
+            getWalk(pages, pages.toList(rand.between(0, pages.size))._2)
+        }).toList
+
+        for page <- pages yield {
+            (page._1, ((pagesLandedOn.count(p => page._2 == p) + 1) / (10000 + pages.size)).toDouble)
+        }
+
+
+    }
+
+    def getWalk(pages: Map[String, WebPage], chosenPage: WebPage): WebPage = {
+        def helper(loopCount: Int, pages: Map[String, WebPage], chosenPage: WebPage): WebPage = {
+            loopCount match {
+                case 0 => chosenPage
+                case _ => helper(loopCount-1, pages,pages.getOrElse(getChosen(pages, chosenPage), WebPage("","","","", List(""))))
+            }
+        }
+        helper(100, pages, chosenPage)
+    }
+
+    def getChosen(pages: Map[String, WebPage], page: WebPage) = {
+        val rand = scala.util.Random
+        val followLinkChance = rand.between(0, 100)
+        if(followLinkChance > 15 && page.links.length > 0) {
+            val pageLink = rand.between(0, page.links.length)
+            page.links(pageLink)
+        } else {
+            val randPage = rand.between(0, pages.size)
+            pages.toList(randPage)._1
+        }
     }
 }
