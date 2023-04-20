@@ -47,7 +47,7 @@ object PageSearch {
         }
         
         val idfs = for term <- query yield {
-            log(pages.length / (count(pages, List(term)).count(x => x > 0) + 1))
+            log(pages.length.toDouble / (count(pages, List(term)).count(x => x > 0) + 1))
         }
         for page <- pages yield {
             val tfs = singlePagetf(page, query)
@@ -56,9 +56,5 @@ object PageSearch {
             }).sum //calculates dot product
             dotProduct
         }
-//        val typeFrequency = tf(pages, query)
-//        val counts = count(pages, query)) //looking at each term instead of the whole query
-//        (for index <- 0 until pages.length yield typeFrequency(index) * (log(pages.length/(counts.length + 1)))).toList
-
     }
 }
