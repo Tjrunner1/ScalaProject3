@@ -19,9 +19,9 @@ import scala.collection.parallel.CollectionConverters._
 
         // TODO: Measure the importance of each page using one of the functions in PageRank
         val rankedPages: List[RankedWebPage] = {
-//          val map =  PageRank.equal(pages)
+          val map = PageRank.equal(pages)
 //        val map = PageRank.indegree(pages)
-        val map = PageRank.pagerank(pages)
+//        val map = PageRank.pagerank(pages)
 
           //    println(map)
           (for x <- map yield {
